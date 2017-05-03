@@ -1,0 +1,43 @@
+nav {
+    background-color: black;
+    width: 100%;
+}
+
+.dropdown-menu {
+    background-color: lightblue;
+    font-weight: bold;
+}
+
+#homeLink {
+    color: white;
+}
+
+#games, #rankingLink, #regLink, #logLink, #logoutLink, #questionsLink, #authoritiesLink {
+    color: darkcyan;
+}
+
+#login-error {
+    color: red;
+}
+h3 {
+    text-align: center;
+}
+
+#ranking-table, #ranking-table-avg {
+    width: 80%;
+}
+
+#ranking-table, #ranking-table th, #ranking-table td, #saves-table td,
+#ranking-table-avg, #ranking-table-avg td, #ranking-table-avg th {
+    border: 3px double black;
+    padding: 5px;
+}
+
+#answer {
+    background-color: lightgrey;
+}
+
+#answer-table {
+    padding: 2px;
+    border-spacing: 2px;
+}

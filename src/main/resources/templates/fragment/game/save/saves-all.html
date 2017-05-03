@@ -1,0 +1,27 @@
+<div class="container">
+    <br/>
+    <h3>Pick save to continue playing</h3>
+    <br/>
+    <table th:if="${not #lists.isEmpty(saves)}" id="saves-table">
+        <tr>
+            <th>#</th>
+            <th>Save</th>
+            <th>Action</th>
+        </tr>
+        <th:block th:each="save, iter : ${saves}" th:object="${save}">
+            <tr>
+                <td>
+                    <div th:text="${iter.count}"></div>
+                </td>
+                <td>
+                    <div th:text="*{#dates.format(time, 'yyyy/MM/dd HH:mm:ss')}"></div>
+                </td>
+                <td>
+                    <div>
+                        <a class="btn btn-warning" th:href="@{/saves/load/{saveId}(saveId=*{saveId})}">Load</a>
+                    </div>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>

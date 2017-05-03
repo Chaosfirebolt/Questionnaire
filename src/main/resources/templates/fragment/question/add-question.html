@@ -1,0 +1,71 @@
+<div class="container">
+    <br/>
+    <h3>Add new question to Questionnaire</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post" th:object="${questionBind}">
+                <br/>
+                <div class="form-group col-lg-6" th:with="valid=${#fields.hasErrors('questionText')}" th:classappend="${valid} ? 'has-danger'">
+                    <label for="questionText" th:style="${valid} ? 'color: #d9534f'">Text: </label>
+                    <textarea id="questionText" class="form-control" type="text" name="questionText" placeholder="Question text"
+                              th:field="*{questionText}"></textarea>
+                    <div class="form-control-feedback" th:each="error : ${#fields.errors('questionText')}" th:text="${error}"></div>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6" th:with="valid=${#fields.hasErrors('level')}" th:classappend="${valid} ? 'has-danger'">
+                    <label for="level" th:style="${valid} ? 'color: #d9534f'">Question level: </label>
+                    <input id="level" class="form-control" type="number" step="1" name="level"
+                           placeholder="Level 1 to 10" th:field="*{level}"/>
+                    <div class="form-control-feedback" th:each="error : ${#fields.errors('level')}" th:text="${error}"></div>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <label for="rightAnswerText">Right answer: </label>
+                    <input id="rightAnswerText" class="form-control" type="text" name="rightAnswer" placeholder="Right answer here"/>
+                    <div class="form-control-feedback"></div>
+                    <input type="hidden" name="true" value="true"/>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <label for="firstWrongAnswer">Wrong answer: </label>
+                    <input id="firstWrongAnswer" class="form-control" type="text" name="firstWrong" placeholder="A wrong answer here"/>
+                    <div class="form-control-feedback" ></div>
+                    <input type="hidden" name="true" value="false"/>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <label for="secondWrongAnswer">Wrong answer: </label>
+                    <input id="secondWrongAnswer" class="form-control" type="text" name="secondWrong" placeholder="A wrong answer here"/>
+                    <div class="form-control-feedback" ></div>
+                    <input type="hidden" name="true" value="false"/>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <label for="thirdWrongAnswer">Wrong answer: </label>
+                    <input id="thirdWrongAnswer" class="form-control" type="text" name="thirdWrong" placeholder="A wrong answer here"/>
+                    <div class="form-control-feedback" ></div>
+                    <input type="hidden" name="true" value="false"/>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <label for="reference">Reference url: </label>
+                    <input id="reference" class="form-control" type="text" name="url" placeholder="URL"/>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <input class="btn btn-lg btn-success" type="submit" value="Add"/>
+                    <span>&nbsp;</span>
+                    <input class="btn btn-lg btn-basic" type="reset" value="Reset"/>
+                </div>
+                <div th:replace="fragment/csrf :: csrf"></div>
+            </form>
+        </div>
+    </div>
+</div>

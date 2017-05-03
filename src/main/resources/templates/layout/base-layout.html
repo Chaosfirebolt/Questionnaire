@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="fragment/base-page-fragments :: head"></head>
+    <body>
+        <nav th:replace="fragment/base-page-fragments :: navigation"></nav>
+        <main>
+            <th:block th:if="${view} != null">
+                <div th:include="${view}">
+                </div>
+            </th:block>
+        </main>
+        <footer th:replace="fragment/scripts :: scripts"></footer>
+    </body>
+</html>

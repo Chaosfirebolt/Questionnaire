@@ -1,0 +1,7 @@
+<div class="container">
+    <br/>
+    <h3>Actions</h3>
+    <br/>
+    <a class="btn btn-lg btn-success" th:href="@{/questions/actions/add-new}" sec:authorize="hasRole('GOD')">Add New</a>
+    <a class="btn btn-lg btn-warning" th:href="@{/questions/actions/validate-own}" sec:authorize="hasRole('GOD')">Validate Own</a>
+</div>

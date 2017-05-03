@@ -1,0 +1,43 @@
+<div class="container">
+    <br/>
+    <h3>Add new question to Questionnaire</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post" th:object="${question}">
+                <br/>
+                <div class="form-group col-lg-6">
+                    <label for="questionText">Text: </label>
+                    <textarea readonly="readonly" id="questionText" class="form-control" type="text" name="questionText"
+                              th:field="*{questionText}"></textarea>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <label for="level">Question level: </label>
+                    <input readonly="readonly" id="level" class="form-control" type="number" step="1" name="level" th:value="*{level}"/>
+                </div>
+
+                <th:block th:each="answer, iter : *{possibleAnswers}">
+                    <br/>
+                    <div class="form-group col-lg-6">
+                        <label for="answerText" th:text="${answer.True} ? 'Right answer: ' : 'Wrong answer: '"></label>
+                        <input readonly="readonly" id="answerText" class="form-control" type="text" name="answerText"
+                               th:value="${answer.answerText}"/>
+                    </div>
+                </th:block>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <label>Reference url: </label>
+                    <a class="input-group" th:href="*{referenceUrl}" th:text="*{referenceUrl}" target="_blank"></a>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <input class="btn btn-lg btn-success" type="submit" value="Validate"/>
+                </div>
+                <div th:replace="fragment/csrf :: csrf"></div>
+            </form>
+        </div>
+    </div>
+</div>

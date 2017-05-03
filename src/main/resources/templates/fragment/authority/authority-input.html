@@ -1,0 +1,17 @@
+<div class="container">
+    <br/>
+    <h3>Change Authorities</h3>
+    <br/>
+    <form method="post">
+        <div class="form-group col-lg-6">
+            <label for="role">Enter role: </label>
+            <input class="form-control" id="role" name="role" type="text"/>
+        </div>
+
+        <div class="form-group col-lg-6">
+            <input th:with="isAdd=${#httpServletRequest.getRequestURI().endsWith('add')}" class="btn btn-lg btn-success" type="submit"
+                   th:value="${isAdd} ? 'Add' : 'Remove'" th:classappend="${!isAdd} ? 'btn-danger'"/>
+        </div>
+        <div th:replace="fragment/csrf :: csrf"></div>
+    </form>
+</div>

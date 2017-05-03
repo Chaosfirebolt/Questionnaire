@@ -1,0 +1,25 @@
+<div class="container">
+    <br/>
+    <h3>Validate questions</h3>
+    <br/>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Question</th>
+            <th>Action</th>
+        </tr>
+        <th:block th:each="question, iter : ${questions}" th:object="${question}">
+            <tr>
+                <td th:text="${iter.count}"></td>
+                <td>
+                    <div class="row">
+                        <div th:text="*{questionText}"></div>
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-warning" th:href="@{/questions/validate/{id}(id=*{id})}">Validate</a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>

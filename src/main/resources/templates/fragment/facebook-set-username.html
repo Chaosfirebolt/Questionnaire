@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="col-lg-6">
+        <br/>
+        <h3>Set your username to finish registration</h3>
+        <form method="post">
+            <br/>
+            <div class="form-group col-lg-6" th:with="valid=${error} != null">
+                <label for="facebookUsername" th:style="${valid} ? 'color: #d9534f'">Username: </label>
+                <input id="facebookUsername" class="form-control" type="text" name="facebookUsername" placeholder="Username"/>
+                <div class="form-control-feedback" th:if="${valid}" th:text="${error}" th:style="${valid} ? 'color: #d9534f'"></div>
+            </div>
+
+            <br/>
+            <div class="form-group col-lg-6">
+                <input class="btn btn-lg btn-primary" type="submit" value="Register"/>
+            </div>
+            <div th:replace="fragment/csrf :: csrf"></div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="container">
+    <br/>
+    <h3>Average Answer Time Ranking</h3>
+    <br/>
+    <table id="ranking-table-avg">
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Average answer time</th>
+        </tr>
+        <th:block th:each="rank, iter : ${ranking}" th:object="${rank}">
+            <tr>
+                <td th:text="*{position}"></td>
+                <td th:text="*{username}"></td>
+                <td th:text="*{averageAnswerTime}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>

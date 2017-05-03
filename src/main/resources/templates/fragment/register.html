@@ -1,0 +1,62 @@
+<div class="container">
+    <br/>
+    <h3>Register normally or use your facebook profile</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post" th:object="${userRegistrationBind}">
+                <br/>
+                <div class="form-group col-lg-6" th:with="valid=${#fields.hasErrors('username')}" th:classappend="${valid} ? 'has-danger'">
+                    <label for="username" th:style="${valid} ? 'color: #d9534f'">Username: </label>
+                    <input id="username" class="form-control" type="text" name="username" placeholder="Username"
+                           th:field="*{username}"/>
+                    <div class="form-control-feedback" th:each="error : ${#fields.errors('username')}" th:text="${error}"></div>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6" th:with="valid=${#fields.hasErrors('email')}" th:classappend="${valid} ? 'has-danger'">
+                    <label for="email" th:style="${valid} ? 'color: #d9534f'">Email: </label>
+                    <input id="email" class="form-control" type="email" name="email"
+                           placeholder="Email" th:field="*{email}"/>
+                    <div class="form-control-feedback" th:each="error : ${#fields.errors('email')}" th:text="${error}"></div>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6" th:with="valid=${#fields.hasErrors('password')}" th:classappend="${valid} ? 'has-danger'">
+                    <label for="password" th:style="${valid} ? 'color: #d9534f'">Password: </label>
+                    <input id="password" class="form-control" type="password"
+                           name="password"
+                           placeholder="Password" th:field="*{password}"/>
+                    <div class="form-control-feedback" th:each="error : ${#fields.errors('password')}" th:text="${error}"></div>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6" th:with="valid=${#fields.hasErrors('global')}" th:classappend="${valid} ? 'has-danger'">
+                    <label for="confirmPassword" th:style="${valid} ? 'color: #d9534f'">Confirm Password: </label>
+                    <input id="confirmPassword" class="form-control" type="password"
+                           name="confirmPassword"
+                           placeholder="Confirm Password" th:field="*{confirmPassword}"/>
+                    <div class="form-control-feedback" th:each="error : ${#fields.errors('global')}" th:text="${error}"></div>
+                </div>
+
+                <br/>
+                <div class="form-group col-lg-6">
+                    <input class="btn btn-lg btn-success" type="submit" value="Register"/>
+                    <span>&nbsp;</span>
+                    <input class="btn btn-lg btn-basic" type="reset" value="Reset"/>
+                </div>
+                <div th:replace="fragment/csrf :: csrf"></div>
+            </form>
+        </div>
+
+        <div class="col-lg-6">
+            <form method="post" th:action="@{/connect/facebook}">
+                <br/>
+                <input type="hidden" name="scope" value="public_profile, email" />
+                <div class="col-lg-6">
+                    <input class="btn btn-lg btn-primary" type="submit" value="Facebook Registration"/>
+                </div>
+                <div th:replace="fragment/csrf :: csrf"></div>
+            </form>
+        </div>
+    </div>
+</div>

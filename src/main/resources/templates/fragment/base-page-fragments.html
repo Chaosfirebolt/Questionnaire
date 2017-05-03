@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:fragment="head">
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="../../static/bootstrap-jquery/bootstrap.min.css" th:href="@{/bootstrap-jquery/bootstrap.min.css}"/>
+        <link rel="stylesheet" href="../../static/custom/style.css" th:href="@{/custom/style.css}"/>
+        <title>Questionnaire</title>
+    </head>
+    <body>
+        <nav th:fragment="navigation" class="navbar navbar-toggleable-md navbar-light">
+            <div class="container">
+                <a id="homeLink" class="navbar-brand" th:href="@{/}">Questionnaire</a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-link" sec:authorize="isAuthenticated()">
+                            <div class="dropdown">
+                                <div id="games" class="dropdown-toggle" data-toggle="dropdown">Games</div>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="nav-link" th:href="@{/games/new-game}">New Game</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" th:href="@{/saves}">Saves</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-link">
+                            <div class="dropdown">
+                                <div id="rankingLink" class="dropdown-toggle" data-toggle="dropdown">Ranking</div>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="nav-link" th:href="@{/ranking/total}">Total</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" th:href="@{/ranking/average-time}">Average Time</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-link" sec:authorize="hasAnyRole('GOD, ADMIN')">
+                            <div class="dropdown">
+                                <div id="questionsLink" class="dropdown-toggle" data-toggle="dropdown">Questions</div>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="nav-link" th:href="@{/questions/add}">Add Question</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" th:href="@{/questions/validate}">Validate Questions</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" th:href="@{/questions/actions}" sec:authorize="hasRole('GOD')">Actions</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('GOD')">
+                            <a id="authoritiesLink" class="nav-link" th:href="@{/authority}">Grant Authority</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated() == false">
+                            <a id="regLink" class="nav-link" th:href="@{/register}">Register</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated() == false">
+                            <a id="logLink" class="nav-link" th:href="@{/login}">Login</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a id="logoutLink" class="nav-link" th:href="@{/logout}" th:text="|Logout, ${#authentication.getName()}|"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </body>
+</html>

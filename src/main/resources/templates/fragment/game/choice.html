@@ -1,0 +1,10 @@
+<div class="container">
+    <br/>
+    <h3>Choose Action - save and continue your game later, or continue now</h3>
+    <br/>
+    <form method="post">
+        <input class="btn btn-lg btn-success" type="submit" name="action" value="Save"/>
+        <input class="btn btn-lg btn-success" type="submit" name="action" value="Continue"/>
+        <div th:replace="fragment/csrf :: csrf"></div>
+    </form>
+</div>

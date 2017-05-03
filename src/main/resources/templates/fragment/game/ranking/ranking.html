@@ -1,0 +1,21 @@
+<div class="container">
+    <br/>
+    <h3>Total Ranking</h3>
+    <br/>
+    <table id="ranking-table">
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Answered</th>
+            <th>Total time</th>
+        </tr>
+        <th:block th:each="rank, iter : ${ranking}" th:object="${rank}">
+            <tr>
+                <td th:text="*{position}"></td>
+                <td th:text="*{username}"></td>
+                <td th:text="*{currentQuestion}"></td>
+                <td th:text="*{totalTime}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
