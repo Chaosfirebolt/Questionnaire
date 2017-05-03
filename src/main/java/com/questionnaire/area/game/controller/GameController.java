@@ -87,8 +87,8 @@ public class GameController {
         boolean isAnswerTrue = this.trueAnswerService.verifyAnswer(givenAnswer.getQuestionId(), givenAnswer.getAnswerId());
         if (!isAnswerTrue) {
             this.gameService.finishGame(gameId);
-            final String homePage = "/";
-            Redirection.redirect(homePage);
+            final String gameOverPage = "/games/game-over";
+            return Redirection.redirect(gameOverPage);
         }
 
         final long placeholderTime = 40_000;
@@ -96,6 +96,12 @@ public class GameController {
         this.gameService.addQuestionToAnswered(gameId, givenAnswer.getQuestionId());
         final String gamePage = "/games/" + gameId + "/save-or-continue";
         return Redirection.redirect(gamePage);
+    }
+
+    @GetMapping("/game-over")
+    public String gameOverPage(Model model) {
+        model.addAttribute(Attribute.VIEW.getName(), View.WRONG_ANSWER.getAddress());
+        return View.BASIC.getAddress();
     }
 
     @GetMapping("/{gameId}/save-or-continue")

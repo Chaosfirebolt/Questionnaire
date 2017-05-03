@@ -35,7 +35,7 @@ public class QuestionGameServiceImpl extends AbstractQuestionServiceImpl impleme
     @Override
     public QuestionView chooseNextQuestion(byte questionLevel, long gameId) {
         List<Long> validQuestionsIdList = super.getQuestionRepository().findValidQuestionsId(questionLevel);
-        List<Long> answeredQuestionsIdList = this.gameRepository.findAnsweredQuestionsIdForGame(gameId);
+        List<Long> answeredQuestionsIdList = this.gameRepository.findAnsweredQuestionsIdForGame(gameId, questionLevel);
         validQuestionsIdList = validQuestionsIdList.stream()
                 .filter(qId -> !answeredQuestionsIdList.contains(qId))
                 .collect(Collectors.toList());

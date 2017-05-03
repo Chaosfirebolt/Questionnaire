@@ -2,7 +2,10 @@ package com.questionnaire.area.save.controller;
 
 import com.questionnaire.area.save.dto.view.SaveView;
 import com.questionnaire.area.save.service.interfaces.SaveLoadService;
-import com.questionnaire.interceptor.*;
+import com.questionnaire.interceptor.game.ValidGameInterceptor;
+import com.questionnaire.interceptor.question.QuestionValidationInterceptor;
+import com.questionnaire.interceptor.user.DisabledFacebookUserInterceptor;
+import com.questionnaire.interceptor.user.FacebookUserRegistrationInterceptor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,9 @@
 package com.questionnaire.config.web;
 
-import com.questionnaire.interceptor.DisabledFacebookUserInterceptor;
-import com.questionnaire.interceptor.FacebookUserRegistrationInterceptor;
-import com.questionnaire.interceptor.QuestionValidationInterceptor;
-import com.questionnaire.interceptor.ValidGameInterceptor;
+import com.questionnaire.interceptor.user.DisabledFacebookUserInterceptor;
+import com.questionnaire.interceptor.user.FacebookUserRegistrationInterceptor;
+import com.questionnaire.interceptor.question.QuestionValidationInterceptor;
+import com.questionnaire.interceptor.game.ValidGameInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

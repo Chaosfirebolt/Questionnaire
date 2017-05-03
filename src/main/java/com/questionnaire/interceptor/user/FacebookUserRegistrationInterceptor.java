@@ -1,4 +1,4 @@
-package com.questionnaire.interceptor;
+package com.questionnaire.interceptor.user;
 
 import com.questionnaire.area.user.entity.FacebookUser;
 import com.questionnaire.area.user.service.interfaces.FacebookUserService;

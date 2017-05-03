@@ -21,7 +21,8 @@ public enum View {
     RANKS("fragment/game/ranking/ranking"),
     RANKS_AVG("fragment/game/ranking/ranking-avg-time"),
     GLOBAL_ERROR("fragment/error/global-error"),
-    ERROR("fragment/error/error");
+    ERROR("fragment/error/error"),
+    WRONG_ANSWER("fragment/game/wrong-answer-message");
 
     private String address;
 

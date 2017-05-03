@@ -20,8 +20,8 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     @Query("SELECT gq.id " +
         "FROM Game AS g " +
         "INNER JOIN g.answeredQuestions AS gq " +
-        "WHERE g.id = :id")
-    List<Long> findAnsweredQuestionsIdForGame(@Param("id") Long id);
+        "WHERE g.id = :id AND gq.questionLevel = :questionLevel")
+    List<Long> findAnsweredQuestionsIdForGame(@Param("id") Long id, @Param("questionLevel") Byte questionLevel);
     @Modifying
     @Transactional
     @Query("UPDATE Game AS g " +

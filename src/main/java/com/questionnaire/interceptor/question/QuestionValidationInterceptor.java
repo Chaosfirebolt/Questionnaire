@@ -1,4 +1,4 @@
-package com.questionnaire.interceptor;
+package com.questionnaire.interceptor.question;
 
 import com.questionnaire.area.question.service.interfaces.QuestionInterceptorService;
 import com.questionnaire.area.user.entity.AbstractUser;
