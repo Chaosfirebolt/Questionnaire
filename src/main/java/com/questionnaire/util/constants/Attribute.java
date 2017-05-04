@@ -11,7 +11,9 @@ public enum Attribute {
     QUESTION("question"),
     USERNAME_MATCHES("usernameMatches"),
     SAVES("saves"),
-    RANKING("ranking");
+    RANKING("ranking"),
+    TIME("time"),
+    TIMEOUT("timeout");
 
     private String name;
 

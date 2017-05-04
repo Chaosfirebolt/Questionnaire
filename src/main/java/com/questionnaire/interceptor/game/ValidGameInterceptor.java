@@ -3,8 +3,6 @@ package com.questionnaire.interceptor.game;
 import com.questionnaire.area.game.service.interfaces.GameInterceptorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +27,8 @@ public class ValidGameInterceptor extends HandlerInterceptorAdapter {
         String gameIdString = url.split("/")[2];
         try {
             long gameId = Long.parseLong(gameIdString);
-            boolean isGameFinished = this.gameInterceptorService.checkIsGameFinished(gameId);
-            if (isGameFinished) {
+            boolean canPlayGame = this.gameInterceptorService.canPlayGame(gameId);
+            if (!canPlayGame) {
                 final String homePage = "/";
                 response.sendRedirect(homePage);
             }

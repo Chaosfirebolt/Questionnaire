@@ -5,5 +5,5 @@ package com.questionnaire.area.game.service.interfaces;
  */
 public interface GameInterceptorService {
 
-    boolean checkIsGameFinished(long gameId);
+    boolean canPlayGame(long gameId);
 }

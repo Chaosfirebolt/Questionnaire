@@ -7,6 +7,8 @@ import com.questionnaire.area.game.service.interfaces.GameInterceptorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created by ChaosFire on 30.4.2017 г
  */
@@ -19,8 +21,17 @@ public class GameInterceptorServiceImplImpl extends AbstractGameServiceImpl impl
     }
 
     @Override
-    public boolean checkIsGameFinished(long gameId) {
+    public boolean canPlayGame(long gameId) {
         Game game = super.getGameRepository().findOne(gameId);
-        return game.getFinished();
+        boolean isFinished = game.getFinished();
+
+        Date now = new Date();
+        Date timeLimit = game.getTimeLimit();
+        if (timeLimit == null) {
+            return !isFinished;
+        }
+        boolean isTimeAfterLimit = now.after(timeLimit);
+
+        return !isFinished || !isTimeAfterLimit;
     }
 }

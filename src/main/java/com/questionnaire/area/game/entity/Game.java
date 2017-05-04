@@ -6,6 +6,7 @@ import com.questionnaire.area.user.entity.AbstractUser;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,8 @@ import java.util.Set;
 @Entity
 @Table(name = "games")
 public class Game implements Serializable {
+
+    private static final Date DEF_TIME_LIMIT = null;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +32,8 @@ public class Game implements Serializable {
     private Boolean isFinished;
     @Column(name = "total_time")
     private Long totalTime;
+    @Column(name = "time_limit")
+    private Date timeLimit;
     @ManyToMany
     @JoinTable(name = "games_questions",
                 joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
@@ -37,6 +42,7 @@ public class Game implements Serializable {
 
     public Game() {
         super();
+        this.setTimeLimit(DEF_TIME_LIMIT);
         this.setAnsweredQuestions(new HashSet<>());
     }
 
@@ -45,6 +51,7 @@ public class Game implements Serializable {
         this.setCurrentQuestion(currentQuestion);
         this.setFinished(isFinished);
         this.setTotalTime(totalTime);
+        this.setTimeLimit(DEF_TIME_LIMIT);
         this.setAnsweredQuestions(new HashSet<>());
     }
 
@@ -90,6 +97,14 @@ public class Game implements Serializable {
 
     public void setTotalTime(Long totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public Date getTimeLimit() {
+        return this.timeLimit;
+    }
+
+    public void setTimeLimit(Date timeLimit) {
+        this.timeLimit = timeLimit;
     }
 
     public Set<Question> getAnsweredQuestions() {

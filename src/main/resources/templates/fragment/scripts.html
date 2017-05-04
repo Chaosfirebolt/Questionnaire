@@ -5,5 +5,13 @@
     <scripts th:fragment="scripts">
         <script src="../../static/bootstrap-jquery/jquery.min.js" th:src="@{/bootstrap-jquery/jquery.min.js}"></script>
         <script src="../../static/bootstrap-jquery/bootstrap.min.js" th:src="@{/bootstrap-jquery/bootstrap.min.js}"></script>
+        <script th:if="${timeout} == true">
+            let timeLimit = 30000;
+            let urlArray = window.location.pathname.split('/');
+            let gameId = urlArray[2];
+            setTimeout(function () {
+                window.location = '/games/' + gameId + '/timeout';
+            }, timeLimit);
+        </script>
     </scripts>
 </html>

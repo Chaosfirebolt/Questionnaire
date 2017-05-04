@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,20 +19,20 @@ import java.util.List;
 public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Query("SELECT gq.id " +
-        "FROM Game AS g " +
-        "INNER JOIN g.answeredQuestions AS gq " +
-        "WHERE g.id = :id AND gq.questionLevel = :questionLevel")
+            "FROM Game AS g " +
+            "INNER JOIN g.answeredQuestions AS gq " +
+            "WHERE g.id = :id AND gq.questionLevel = :questionLevel")
     List<Long> findAnsweredQuestionsIdForGame(@Param("id") Long id, @Param("questionLevel") Byte questionLevel);
     @Modifying
     @Transactional
     @Query("UPDATE Game AS g " +
-            "SET g.isFinished = true " +
+            "SET g.isFinished = true, g.timeLimit = null " +
             "WHERE g.id = :gameId")
     void finishGame(@Param("gameId") Long gameId);
     @Modifying
     @Transactional
     @Query("UPDATE Game AS g " +
-            "SET g.totalTime = g.totalTime + :answerTime, g.currentQuestion = g.currentQuestion + 1 " +
+            "SET g.totalTime = g.totalTime + :answerTime, g.currentQuestion = g.currentQuestion + 1, g.timeLimit = null " +
             "WHERE g.id = :gameId")
     void updateGame(@Param("answerTime") long answerTime, @Param("gameId") long gameId);
     @Query("SELECT MAX(g.currentQuestion), g.totalTime, u.username " +
@@ -50,4 +51,10 @@ public interface GameRepository extends JpaRepository<Game, Long> {
                     "ORDER BY average",
         nativeQuery = true)
     List<Object[]> findAllByAverageAnswerTime();
+    @Modifying
+    @Transactional
+    @Query("UPDATE Game AS g " +
+            "SET g.timeLimit = :timeLimit " +
+            "WHERE g.id = :gameId")
+    void addAnswerTimeLimit(@Param("timeLimit") Date limit, @Param("gameId") Long gameId);
 }

@@ -12,6 +12,7 @@ import com.questionnaire.area.trueAnswer.service.TrueAnswerService;
 import com.questionnaire.area.user.entity.AbstractUser;
 import com.questionnaire.util.constants.Attribute;
 import com.questionnaire.util.constants.View;
+import com.questionnaire.util.question.QuestionUtil;
 import com.questionnaire.util.redirection.Redirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * Created by ChaosFire on 29.4.2017 г
@@ -57,7 +61,7 @@ public class GameController {
         GameView gameView = this.gameService.getGame(gameId);
         this.saveGameService.deleteSave(gameId);
 
-        byte questionLevel = this.calculateQuestionLevel(gameView.getCurrentQuestion());
+        byte questionLevel = QuestionUtil.calculateQuestionLevel(gameView.getCurrentQuestion());
         QuestionView questionView = this.questionGameService.chooseNextQuestion(questionLevel, gameView.getGameId());
         redirectAttributes.addFlashAttribute(Attribute.QUESTION.getName(), questionView);
 
@@ -65,25 +69,26 @@ public class GameController {
         return Redirection.redirect(gameQuestionPage);
     }
 
-    private byte calculateQuestionLevel(byte currentQuestion) {
-        int remainder = currentQuestion % 10;
-        byte questionLevel;
-        if (remainder == 0) {
-            questionLevel = (byte) (currentQuestion / 10);
-        } else {
-            questionLevel = (byte) ((currentQuestion / 10) + 1);
-        }
-        return questionLevel;
-    }
-
     @GetMapping("/{gameId}/question/{questionId}")
-    public String answerQuestionPage(Model model) {
+    public String answerQuestionPage(@PathVariable long gameId, Model model, HttpSession session) {
+        long startTime = System.currentTimeMillis();
+
+        final long thirtySeconds = 30_000;
+        Date timeLimit = new Date(startTime + thirtySeconds);
+        this.gameService.addTimeLimitToAnswer(timeLimit, gameId);
+
+        session.setAttribute(Attribute.TIME.getName(), startTime);
+        final boolean isTimeoutActive = true;
+        model.addAttribute(Attribute.TIMEOUT.getName(), isTimeoutActive);
         model.addAttribute(Attribute.VIEW.getName(), View.GAME.getAddress());
         return View.BASIC.getAddress();
     }
 
     @PostMapping("/{gameId}/question/{questionId}")
-    public String verifyAnswer(@PathVariable long gameId, @ModelAttribute GivenAnswerBind givenAnswer) {
+    public String verifyAnswer(@PathVariable long gameId, @ModelAttribute GivenAnswerBind givenAnswer, HttpSession session) {
+        long endTime = System.currentTimeMillis();
+        long startTime = (long) session.getAttribute(Attribute.TIME.getName());
+        session.removeAttribute(Attribute.TIME.getName());
         boolean isAnswerTrue = this.trueAnswerService.verifyAnswer(givenAnswer.getQuestionId(), givenAnswer.getAnswerId());
         if (!isAnswerTrue) {
             this.gameService.finishGame(gameId);
@@ -91,11 +96,18 @@ public class GameController {
             return Redirection.redirect(gameOverPage);
         }
 
-        final long placeholderTime = 40_000;
-        this.gameService.updateGame(placeholderTime, gameId);
+        final long answerTime = endTime - startTime;
+        this.gameService.updateGame(answerTime, gameId);
         this.gameService.addQuestionToAnswered(gameId, givenAnswer.getQuestionId());
         final String gamePage = "/games/" + gameId + "/save-or-continue";
         return Redirection.redirect(gamePage);
+    }
+
+    @GetMapping("/{gameId}/timeout")
+    public String endGameFromTimeOut(@PathVariable long gameId) {
+        this.gameService.finishGame(gameId);
+        final String gameOverPage = "/games/game-over";
+        return Redirection.redirect(gameOverPage);
     }
 
     @GetMapping("/game-over")

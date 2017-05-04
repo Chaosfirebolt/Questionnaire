@@ -13,6 +13,8 @@ import com.questionnaire.area.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created by ChaosFire on 29.4.2017 г
  */
@@ -56,6 +58,11 @@ public class GameServiceImpl extends AbstractGameServiceImpl implements GameServ
     @Override
     public void updateGame(long answerTime, long gameId) {
         super.getGameRepository().updateGame(answerTime, gameId);
+    }
+
+    @Override
+    public void addTimeLimitToAnswer(Date timeLimit, long gameId) {
+        super.getGameRepository().addAnswerTimeLimit(timeLimit, gameId);
     }
 
     @Override
