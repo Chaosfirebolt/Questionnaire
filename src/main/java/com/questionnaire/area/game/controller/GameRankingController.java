@@ -1,15 +1,19 @@
 package com.questionnaire.area.game.controller;
 
 import com.questionnaire.area.game.dto.view.GameRankingAvgTimeView;
+import com.questionnaire.area.game.dto.view.GameRankingBriefView;
 import com.questionnaire.area.game.dto.view.GameRankingView;
 import com.questionnaire.area.game.service.interfaces.GameRankingService;
 import com.questionnaire.util.constants.Attribute;
 import com.questionnaire.util.constants.View;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -43,5 +47,11 @@ public class GameRankingController {
 
         model.addAttribute(Attribute.VIEW.getName(), View.RANKS_AVG.getAddress());
         return View.BASIC.getAddress();
+    }
+
+    @GetMapping("/user-data")
+    public ResponseEntity<List<GameRankingBriefView>> getUsernameMatch(@RequestParam String username) {
+        List<GameRankingBriefView> rankingViewList = this.gameRankingService.getPlayerRankingData(username);
+        return new ResponseEntity<>(rankingViewList, HttpStatus.OK);
     }
 }

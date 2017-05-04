@@ -1,6 +1,7 @@
 package com.questionnaire.area.game.service.interfaces;
 
 import com.questionnaire.area.game.dto.view.GameRankingAvgTimeView;
+import com.questionnaire.area.game.dto.view.GameRankingBriefView;
 import com.questionnaire.area.game.dto.view.GameRankingView;
 
 import java.util.List;
@@ -11,5 +12,6 @@ import java.util.List;
 public interface GameRankingService {
 
     List<GameRankingView> showTotalRanking();
+    List<GameRankingBriefView> getPlayerRankingData(String username);
     List<GameRankingAvgTimeView> showAvgTimeRanking();
 }

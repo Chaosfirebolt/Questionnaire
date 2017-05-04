@@ -1,6 +1,7 @@
 package com.questionnaire.area.game.service.impl;
 
 import com.questionnaire.area.game.dto.view.GameRankingAvgTimeView;
+import com.questionnaire.area.game.dto.view.GameRankingBriefView;
 import com.questionnaire.area.game.dto.view.GameRankingView;
 import com.questionnaire.area.game.repository.GameRepository;
 import com.questionnaire.area.game.service.AbstractGameServiceImpl;
@@ -42,6 +43,22 @@ public class GameRankingServiceImpl extends AbstractGameServiceImpl implements G
             ranking.add(view);
         }
         return ranking;
+    }
+
+    @Override
+    public List<GameRankingBriefView> getPlayerRankingData(String username) {
+        List<Object[]> playerRankData = super.getGameRepository().findAllByCurrentQuestionRankNameMatch(username);
+        List<GameRankingBriefView> rankingViewList = new ArrayList<>();
+        for (Object[] data : playerRankData) {
+            byte lastAnsweredQuestion = (byte) ((byte) data[0] - 1);
+            long milliseconds = (long) data[1];
+            String totalTime = this.convertMillisecondsToTime(milliseconds);
+            String user = data[2].toString();
+
+            GameRankingBriefView view = new GameRankingBriefView(user, lastAnsweredQuestion, totalTime);
+            rankingViewList.add(view);
+        }
+        return rankingViewList;
     }
 
     @Override

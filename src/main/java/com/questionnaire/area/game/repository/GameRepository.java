@@ -23,25 +23,36 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             "INNER JOIN g.answeredQuestions AS gq " +
             "WHERE g.id = :id AND gq.questionLevel = :questionLevel")
     List<Long> findAnsweredQuestionsIdForGame(@Param("id") Long id, @Param("questionLevel") Byte questionLevel);
+
     @Modifying
     @Transactional
     @Query("UPDATE Game AS g " +
             "SET g.isFinished = true, g.timeLimit = null " +
             "WHERE g.id = :gameId")
     void finishGame(@Param("gameId") Long gameId);
+
     @Modifying
     @Transactional
     @Query("UPDATE Game AS g " +
             "SET g.totalTime = g.totalTime + :answerTime, g.currentQuestion = g.currentQuestion + 1, g.timeLimit = null " +
             "WHERE g.id = :gameId")
     void updateGame(@Param("answerTime") long answerTime, @Param("gameId") long gameId);
-    @Query("SELECT MAX(g.currentQuestion), g.totalTime, u.username " +
+
+    @Query("SELECT MAX(g.currentQuestion) AS question, g.totalTime, u.username " +
             "FROM Game AS g " +
             "INNER JOIN g.user AS u " +
             "WHERE g.isFinished = true " +
             "GROUP BY u.username " +
-            "ORDER BY g.currentQuestion DESC, g.totalTime ASC")
+            "ORDER BY question DESC, g.totalTime ASC")
     List<Object[]> findAllByCurrentQuestionRank();
+
+    @Query("SELECT MAX(g.currentQuestion) AS question, g.totalTime, u.username " +
+            "FROM Game AS g " +
+            "INNER JOIN g.user AS u " +
+            "WHERE g.isFinished = true AND u.username LIKE CONCAT('%', :username, '%') " +
+            "GROUP BY u.username")
+    List<Object[]> findAllByCurrentQuestionRankNameMatch(@Param("username") String username);
+
     @Query(value = "SELECT users.username, MIN((games.total_time / (games.current_question - 1)) / 1000) AS average " +
                     "FROM games " +
                     "INNER JOIN users " +
@@ -51,6 +62,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
                     "ORDER BY average",
         nativeQuery = true)
     List<Object[]> findAllByAverageAnswerTime();
+
     @Modifying
     @Transactional
     @Query("UPDATE Game AS g " +

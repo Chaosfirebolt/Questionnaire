@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .rememberMe()
                     .rememberMeParameter("rememberMe")
-                    .key("random stuff here")
+                    .key("kjasdjfhkldsldfkdvnmerkl")
                     .rememberMeCookieName("QuestionnaireRememberMeCookie")
                     .tokenValiditySeconds(ONE_WEEK_IN_SECONDS)
                 .and()
