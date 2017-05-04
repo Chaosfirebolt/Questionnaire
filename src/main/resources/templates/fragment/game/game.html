@@ -3,34 +3,42 @@
     <h3>Answer question, you have 30 seconds</h3>
     <br/>
     <th:block th:object="${question}">
-        <div class="form-group col-lg-6">
-            <label for="question">Question: </label>
-            <br/>
-            <textarea class="form-control" readonly="readonly" name="question" id="question" th:data="*{id}" cols="10" rows="5"
-                      th:text="*{questionText}"></textarea>
+        <div class="form-group row">
+            <div class="form-group col-lg-6">
+                <label for="question">Question: </label>
+                <br/>
+                <textarea class="form-control" readonly="readonly" name="question" id="question" th:data="*{id}" cols="10" rows="5"
+                          th:text="*{questionText}"></textarea>
+            </div>
         </div>
 
-        <div class="form-group col-lg-6">
-            <div>Possible answers:</div>
-            <table id="answer-table">
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr th:each="answer, iter : *{possibleAnswers}">
-                    <td>
-                        <div readonly="readonly" id="answer" type="text" class="form-control" th:text="${answer.answerText}"></div>
-                    </td>
-                    <td>
-                        <form method="post">
-                            <input type="hidden" name="questionId" th:value="*{id}"/>
-                            <input type="hidden" name="answerId" th:value="${answer.id}"/>
-                            <button class="btn btn-primary" type="submit" th:text="Choose"></button>
-                            <div th:replace="fragment/csrf :: csrf"></div>
-                        </form>
-                    </td>
-                </tr>
-            </table>
+        <div class="form-group row">
+            <div class="form-group col-lg-4">
+                <div>Possible answers:</div>
+                <table id="answer-table">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="answer, iter : *{possibleAnswers}">
+                        <td>
+                            <div readonly="readonly" id="answer" type="text" class="form-control" th:text="${answer.answerText}"></div>
+                        </td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" name="questionId" th:value="*{id}"/>
+                                <input type="hidden" name="answerId" th:value="${answer.id}"/>
+                                <button class="btn btn-primary" type="submit" th:text="Choose"></button>
+                                <div th:replace="fragment/csrf :: csrf"></div>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="form-group col-lg-6">
+                <div id="DateCountdown" data-timer="30" style="width: 40%;"></div>
+            </div>
         </div>
     </th:block>
 </div>

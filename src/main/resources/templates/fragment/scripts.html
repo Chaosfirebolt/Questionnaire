@@ -6,6 +6,7 @@
         <script src="../../static/bootstrap-jquery/jquery.min.js" th:src="@{/bootstrap-jquery/jquery.min.js}"></script>
         <script src="../../static/bootstrap-jquery/bootstrap.min.js" th:src="@{/bootstrap-jquery/bootstrap.min.js}"></script>
         <script th:src="@{/script/script-ajax.js}"></script>
+        <script th:src="@{/script/TimeCircles.js}"></script>
         <script th:if="${timeout} == true">
             let timeLimit = 30000;
             let urlArray = window.location.pathname.split('/');
@@ -14,5 +15,6 @@
                 window.location = '/games/' + gameId + '/timeout';
             }, timeLimit);
         </script>
+        <script th:if="${timeout} == true" th:src="@{/script/countdown.js}"></script>
     </scripts>
 </html>
