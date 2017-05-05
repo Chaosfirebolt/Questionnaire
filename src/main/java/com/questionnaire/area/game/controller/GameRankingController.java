@@ -36,6 +36,9 @@ public class GameRankingController {
         List<GameRankingView> ranking = this.gameRankingService.showTotalRanking();
         model.addAttribute(Attribute.RANKING.getName(), ranking);
 
+        final boolean isSearchPage = true;
+        model.addAttribute(Attribute.SEARCH.getName(), isSearchPage);
+
         model.addAttribute(Attribute.VIEW.getName(), View.RANKS.getAddress());
         return View.BASIC.getAddress();
     }

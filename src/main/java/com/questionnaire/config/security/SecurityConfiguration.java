@@ -22,7 +22,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
-                .antMatchers("/", "/register/**", "/ranking/**", "/bootstrap-jquery/**", "/custom/**", "/connect/**").permitAll()
+                .antMatchers("/", "/register/**", "/connect/**", "/ranking/**",
+                        "/bootstrap-jquery/**", "/custom/**", "/script/**", "/time-circles/**").permitAll()
                 .antMatchers("/register", "/login").anonymous()
                 .antMatchers("/questions/actions", "/questions/actions/**").access("hasRole('GOD')")
                 .antMatchers("/questions/**").access("hasRole('GOD') or hasRole('ADMIN')")

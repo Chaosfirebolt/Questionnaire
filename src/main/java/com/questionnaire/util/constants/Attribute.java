@@ -13,7 +13,8 @@ public enum Attribute {
     SAVES("saves"),
     RANKING("ranking"),
     TIME("time"),
-    TIMEOUT("timeout");
+    TIMEOUT("timeout"),
+    SEARCH("search");
 
     private String name;
 

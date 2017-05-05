@@ -29,8 +29,7 @@ public class ValidGameInterceptor extends HandlerInterceptorAdapter {
             long gameId = Long.parseLong(gameIdString);
             boolean canPlayGame = this.gameInterceptorService.canPlayGame(gameId);
             if (!canPlayGame) {
-                final String homePage = "/";
-                response.sendRedirect(homePage);
+                return false;
             }
         } catch (NumberFormatException exc) {
             return true;
