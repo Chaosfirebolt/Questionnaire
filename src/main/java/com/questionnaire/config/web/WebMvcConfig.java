@@ -18,6 +18,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     private static final String FACEBOOK_REG_USERNAME_PATH = "/register/facebook/set-username";
     private static final String QUESTION_VALIDATION_PATH = "/questions/validate/*";
     private static final String GAME_PATH = "/games/**";
+    private static final String GAME_TIMEOUT_PATH = "/games/*/timeout";
 
     private final FacebookUserRegistrationInterceptor facebookUserRegistrationInterceptor;
     private final DisabledFacebookUserInterceptor disabledFacebookUserInterceptor;
@@ -40,6 +41,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(this.facebookUserRegistrationInterceptor).addPathPatterns(FACEBOOK_REG_USERNAME_PATH);
         registry.addInterceptor(this.disabledFacebookUserInterceptor).excludePathPatterns(FACEBOOK_REG_USERNAME_PATH);
         registry.addInterceptor(this.questionValidationInterceptor).addPathPatterns(QUESTION_VALIDATION_PATH);
-        registry.addInterceptor(this.validGameInterceptor).addPathPatterns(GAME_PATH);
+        registry.addInterceptor(this.validGameInterceptor).addPathPatterns(GAME_PATH).excludePathPatterns(GAME_TIMEOUT_PATH);
     }
 }

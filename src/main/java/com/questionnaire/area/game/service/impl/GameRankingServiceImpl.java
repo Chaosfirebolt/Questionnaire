@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,8 @@ public class GameRankingServiceImpl extends AbstractGameServiceImpl implements G
 
             long position = index + 1;
             byte lastAnsweredQuestion = (byte) ((byte) data[0] - 1);
-            long milliseconds = (long) data[1];
+            BigInteger millis = (BigInteger) data[1];
+            long milliseconds = millis.longValue();
             String totalTime = this.convertMillisecondsToTime(milliseconds);
             String username = data[2].toString();
 

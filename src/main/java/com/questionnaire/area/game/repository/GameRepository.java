@@ -38,12 +38,20 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             "WHERE g.id = :gameId")
     void updateGame(@Param("answerTime") long answerTime, @Param("gameId") long gameId);
 
-    @Query("SELECT MAX(g.currentQuestion) AS question, g.totalTime, u.username " +
-            "FROM Game AS g " +
-            "INNER JOIN g.user AS u " +
-            "WHERE g.isFinished = true " +
-            "GROUP BY u.username " +
-            "ORDER BY question DESC, g.totalTime ASC")
+    @Query(value = "SELECT g.current_question, g.total_time, u.username " +
+                        "FROM games AS g " +
+                        "INNER JOIN users AS u " +
+                        "ON g.user_id = u.id " +
+                        "INNER JOIN (SELECT MAX(ing.current_question) AS question, inu.id AS uid " +
+                                        "FROM games AS ing " +
+                                        "INNER JOIN users AS inu " +
+                                        "ON ing.user_id = inu.id " +
+                                        "WHERE ing.total_time != 0 " +
+                                        "GROUP BY inu.username ) AS umg " +
+                        "ON g.current_question = umg.question AND u.id = umg.uid " +
+                        "WHERE g.is_finished = TRUE " +
+                        "ORDER BY g.current_question DESC, g.total_time ASC",
+            nativeQuery = true)
     List<Object[]> findAllByCurrentQuestionRank();
 
     @Query("SELECT MAX(g.currentQuestion) AS question, g.totalTime, u.username " +
